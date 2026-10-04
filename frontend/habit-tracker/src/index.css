@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+
+/* Semantic colours — each maps to a theme token below, so every utility
+   (bg-surface, text-muted, border-line, …) flips with dark mode. */
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-disabled: var(--disabled);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-line-strong: var(--line-strong);
+  --color-fill: var(--fill);
+  --color-hover: var(--hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+}
+
+/* ---------- Theme tokens ---------- */
+:root {
+  color-scheme: light;
+
+  --page: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --fg: #0a0a0a;
+  --fg-2: #262626;
+  --muted: #525252;
+  --faint: #737373;
+  --disabled: #a3a3a3;
+  --line: #e5e5e5;
+  --line-soft: #ededed;
+  --line-strong: #d4d4d4;
+  --fill: #f2f2f2;
+  --hover: #f5f5f5;
+  --accent: #0a0a0a;
+  --accent-hover: #262626;
+  --on-accent: #ffffff;
+  --ring: rgba(10, 10, 10, 0.08);
+  --overlay: rgba(10, 10, 10, 0.45);
+  --shadow-pop: 0 24px 64px rgba(0, 0, 0, 0.14);
+
+  --heat-0: #efefef;
+  --heat-1: #d4d4d4;
+  --heat-2: #a3a3a3;
+  --heat-3: #525252;
+  --heat-4: #0a0a0a;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  --page: #0a0a0a;
+  --surface: #141414;
+  --surface-2: #0f0f0f;
+  --fg: #fafafa;
+  --fg-2: #e5e5e5;
+  --muted: #a3a3a3;
+  --faint: #8a8a8a;
+  --disabled: #525252;
+  --line: #262626;
+  --line-soft: #1f1f1f;
+  --line-strong: #333333;
+  --fill: #1f1f1f;
+  --hover: #1a1a1a;
+  --accent: #fafafa;
+  --accent-hover: #e5e5e5;
+  --on-accent: #0a0a0a;
+  --ring: rgba(250, 250, 250, 0.12);
+  --overlay: rgba(0, 0, 0, 0.65);
+  --shadow-pop: 0 24px 64px rgba(0, 0, 0, 0.5);
+
+  --heat-0: #1f1f1f;
+  --heat-1: #3a3a3a;
+  --heat-2: #6b6b6b;
+  --heat-3: #a3a3a3;
+  --heat-4: #fafafa;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--fg);
+    color: var(--surface);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+
+  /* Tailwind v4 resets buttons to the default arrow cursor — restore the
+     pointer on everything clickable, and show "not allowed" when disabled. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href],
+  select:not(:disabled),
+  summary,
+  label:has(input[type="checkbox"], input[type="radio"]),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-medium transition-colors;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--on-accent);
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--fg);
+    border: 1px solid var(--line-strong);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--hover);
+  }
+  .btn-ghost {
+    @apply px-3;
+    color: var(--muted);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--fill);
+    color: var(--fg);
+  }
+  .btn-icon {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors;
+    color: var(--muted);
+  }
+  .btn-icon:hover:not(:disabled) {
+    background: var(--fill);
+    color: var(--fg);
+  }
+  .btn-sm {
+    @apply h-9 px-3 text-[13px];
+  }
+  :is(.btn-primary, .btn-secondary, .btn-ghost, .btn-icon):disabled {
+    opacity: 0.45;
+  }
+
+  .input {
+    @apply h-10 w-full rounded-lg px-3 text-sm transition-[border-color,box-shadow];
+    background: var(--surface);
+    color: var(--fg);
+    border: 1px solid var(--line-strong);
+  }
+  textarea.input {
+    @apply h-auto py-2.5 leading-relaxed;
+  }
+  .input::placeholder {
+    color: var(--faint);
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--fg);
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+  .input[aria-invalid="true"] {
+    border-width: 1.5px;
+    border-color: var(--fg);
+  }
+
+  .label {
+    @apply mb-1.5 block text-[13px] font-medium;
+    color: var(--fg-2);
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded px-[5px] font-mono text-[11px] leading-4;
+    border: 1px solid var(--line-strong);
+    color: var(--muted);
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.06em];
+    color: var(--faint);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .icon-tile {
+    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-lg;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--fg);
+  }
+
+  .segmented {
+    @apply inline-flex h-10 items-stretch gap-[2px] rounded-lg p-[3px];
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+  }
+  .segmented > button {
+    @apply rounded-md px-3 text-[13px] font-medium transition-colors;
+    color: var(--muted);
+  }
+  .segmented > button:hover {
+    color: var(--fg);
+  }
+  .segmented > button[aria-pressed="true"],
+  .segmented > button[aria-checked="true"] {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .skeleton {
+    @apply block h-2.5 rounded-full;
+    background: var(--fill);
+  }
+}
+
+/* ---------- Motion ---------- */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.25s ease-out; }
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.animate-pop { animation: pop 0.3s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-pop,
+  .animate-spin,
+  .animate-pulse {
+    animation: none;
+  }
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--disabled); }
