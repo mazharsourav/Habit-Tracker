@@ -13,7 +13,9 @@ A clean, ad-free habit tracker with an AI coach. Built with React, Express and M
 
 ## Why I made it
 
-I was trying to get rid of some bad habits, and tracking them daily was the only way I could see if I was actually making progress. The habit apps I tried were full of ads and distractions, so I built my own: no ads, no clutter, just the habits and the numbers.
+I built this in my third year of university. I was trying to get rid of some bad habits, and tracking them daily was the only way I could see if I was actually making progress. The habit apps I tried were full of ads and distractions, so I made my own.
+
+The first version was just a frontend with a simple design. It ran in my browser, saved everything locally, and was only meant for me. Later I added a backend with accounts, a database and AI features, which turned it into the full-stack app it is now.
 
 ## Features
 
